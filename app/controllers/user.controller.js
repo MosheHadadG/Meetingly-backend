@@ -307,7 +307,7 @@ export const deleteNotificationById = async (req, res) => {
     const deletedNotification = await Notification.findByIdAndDelete(
       notificationId
     );
-    console.log(deletedNotification);
+
     const totalNotifications = await Notification.find({
       receiver: userId,
     }).countDocuments({});
