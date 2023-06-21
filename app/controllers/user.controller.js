@@ -301,16 +301,20 @@ export const markAsReadAllNotifications = async (req, res) => {
 };
 
 export const deleteNotificationById = async (req, res) => {
+  const { _id: userId } = req.user;
   try {
     const { notificationId } = req.body;
+    const deletedNotification = await Notification.findByIdAndDelete(
+      notificationId
+    );
+    console.log(deletedNotification);
+    const totalNotifications = await Notification.find({
+      receiver: userId,
+    }).countDocuments({});
 
-    Notification.findByIdAndDelete(notificationId, (err, x) => {
-      if (err) throw new Error(err);
-      else {
-        res.send({
-          status: "success",
-        });
-      }
+    res.send({
+      status: "success",
+      totalNotifications,
     });
   } catch (error) {
     res.status(400).send({ error: err.message });
