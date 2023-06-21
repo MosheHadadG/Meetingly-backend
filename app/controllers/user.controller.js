@@ -215,7 +215,7 @@ export const getEventsUserParticipate = async (req, res) => {
     if (!events || events.length <= 0)
       return res.send({ status: "NoFound", statusMessage: "לא נמצאו אירועים" });
 
-    res.send(events);
+    res.send({ status: "success", events });
   } catch (err) {
     res.status(400).send({ status: "success", error: err.message });
   }
