@@ -2,6 +2,7 @@ import express, { urlencoded } from "express";
 import cors from "cors";
 import { userRouter } from "./routes/user.route.js";
 import { eventsRouter } from "./routes/events.route.js";
+import { chatRouter } from "./routes/chat.route.js";
 
 export const app = express();
 
@@ -15,3 +16,4 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRouter);
 app.use("/events", eventsRouter);
+app.use("/chat", chatRouter);

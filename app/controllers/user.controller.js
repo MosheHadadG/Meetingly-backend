@@ -162,7 +162,6 @@ export const loadUser = async (req, res) => {
 //! check username not exist
 export const updateUser = async (req, res) => {
   const updates = Object.keys(req.body);
-  console.log(updates);
   const allowedUpdates = [
     "firstName",
     "lastName",
