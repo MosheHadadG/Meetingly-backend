@@ -48,25 +48,7 @@ export const getMessages = async (req, res) => {
 export const getNumberUnreadMessages = async (req, res) => {
   const { username, _id: userId } = req.user;
 
-  // const conditions = {
-  // senderId: { $ne: userId.toString() },
-  // isRead: { $ne: username },
-  //   chatId: "64945fb066d7eb27ed50ba86",
-  // };
-
   try {
-    // const totalUnreadMessages = await Message.find({
-    //   senderId: { $ne: userId.toString() },
-    //   isRead: { $ne: username },
-    // })
-    //   .populate({
-    //     path: "chatId",
-    //     match: {
-    //       members: { $in: [username] },
-    //     },
-    //   })
-    //   .then((messages) => messages.filter((message) => message.chatId != null)).le
-
     const unreadMessages = await Message.find({
       senderId: { $ne: userId.toString() },
       isRead: { $ne: username },

@@ -9,7 +9,11 @@ export const createChat = async (req, res) => {
       members: { $all: [username, receiverUsername] },
     });
     if (chatExist.length > 0)
-      return res.send({ status: "chatExist", message: "צאט כבר קיים" });
+      return res.send({
+        status: "chatExist",
+        result: chatExist,
+        message: "צאט כבר קיים",
+      });
 
     const newChat = new Chat({
       members: [username, receiverUsername],
