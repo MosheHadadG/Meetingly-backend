@@ -31,7 +31,7 @@ export const userChats = async (req, res) => {
   try {
     const chats = await Chat.find({
       members: { $in: [username] },
-    }).sort({ "lastMessage.createdAt": -1 });
+    });
 
     res.send({ status: "success", chats });
   } catch (err) {
