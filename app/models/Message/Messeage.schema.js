@@ -8,6 +8,7 @@ export const MessageSchema = mongoose.Schema(
     },
     senderId: {
       type: String,
+      ref: "user",
     },
     text: {
       type: String,

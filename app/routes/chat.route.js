@@ -1,6 +1,8 @@
 import express from "express";
 import {
-  createChat,
+  addMemberToChat,
+  createGroupChat,
+  createPrivateChat,
   findChat,
   userChats,
 } from "../controllers/chat.controller.js";
@@ -16,7 +18,9 @@ export const chatRouter = express.Router();
 
 //! Need Auth
 
-chatRouter.post("/", auth, createChat);
+chatRouter.post("/private", auth, createPrivateChat);
+chatRouter.post("/group", auth, createGroupChat);
+chatRouter.patch("/group/add-member", auth, addMemberToChat);
 chatRouter.get("/", auth, userChats);
 chatRouter.get("/find/:firstId/:secondId", auth, findChat);
 

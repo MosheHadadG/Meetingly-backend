@@ -94,30 +94,9 @@ export const deleteEventCoverImg = async (req, res) => {
 
 export const getEventsByType = async (req, res) => {
   const userInterests = req.user.interests;
-  const eventTypesWithPages = req.query;
-  const eventTypes = Object.keys(eventTypesWithPages);
-  console.log(eventTypes);
-  // pagination
-  // return res.send("not");
-  const LIMIT = 5;
-  // const startIndex = (Number(page) - 1) * LIMIT;
-
   const getEvents = async () => {
     return Promise.all(
       userInterests.map(async (interest) => {
-        // const startIndex = (Number(page) - 1) * LIMIT;
-        // const totalEventsByType = await Event.find({
-        //   type: interest.type,
-        // }).countDocuments({});
-
-        // const userNotificationsWithSender = await Event.find({
-        //   receiver: userId,
-        // })
-        //   .populate("sender", "username avatar")
-        //   .limit(LIMIT)
-        //   .skip(startIndex);
-        // console.log(totalEventsByType);
-
         const eventsByType = await Event.find({
           type: interest.type,
           date: { $gte: new Date() },
@@ -169,22 +148,6 @@ export const getEventById = async (req, res) => {
     res.status(400).send({ error: err.message });
   }
 };
-
-// export const getParticipantsById = async (req, res) => {
-//   try {
-//     const { participantsIds } = req.query;
-//     if (!participantsIds) throw new Error("Need participants");
-
-//     const participants = await User.find({
-//       _id: { $in: participantsIds.split(";") },
-//     });
-//     if (!participants) res.status(404).send("Participants No Found");
-//     console.log(participants);
-//     res.send(participants);
-//   } catch (err) {
-//     res.status(400).send({ error: err.message });
-//   }
-// };
 
 export const getEventsByOwnerId = async (req, res) => {
   try {

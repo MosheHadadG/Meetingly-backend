@@ -1,4 +1,5 @@
 import Chat from "../models/Chat/Chat.model.js";
+import { ChatSchema } from "../models/Chat/Chat.schema.js";
 import Message from "../models/Message/Messeage.model.js";
 import { uniqueCount } from "./utils/message.util.js";
 
@@ -14,8 +15,15 @@ export const addMessage = async (req, res) => {
 
   try {
     const messageSaved = await message.save();
-    await Chat.findOneAndUpdate({ _id: chatId }, { lastMessage: messageSaved });
-    res.send({ status: "success", message: messageSaved });
+    const populatedMessage = await Message.findById(messageSaved._id)
+      .populate("senderId", "avatar firstName lastName username")
+      .lean();
+
+    const chat = await Chat.findById(chatId);
+    chat.lastMessage = populatedMessage;
+    await chat.save();
+
+    res.send({ status: "success", message: populatedMessage });
   } catch (err) {
     res.status(400).send({ error: err.message });
   }
@@ -37,7 +45,10 @@ export const getMessages = async (req, res) => {
       $push: { isRead: username },
     });
 
-    const result = await Message.find({ chatId });
+    const result = await Message.find({ chatId }).populate(
+      "senderId",
+      "avatar firstName lastName username"
+    );
 
     res.send({ status: "success", result });
   } catch (err) {
