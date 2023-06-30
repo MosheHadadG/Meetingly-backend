@@ -11,6 +11,7 @@ import {
 import Event from "../models/Event/Event.model.js";
 import Notification from "../models/Notification/notification.model.js";
 import Request from "../models/Request/request.model.js";
+import Chat from "../models/Chat/Chat.model.js";
 
 export const uploadAvatar = async (req, res) => {
   try {
@@ -425,6 +426,7 @@ export const eventRequestUserDecision = async (req, res) => {
         // Delete Request
         await Request.findByIdAndDelete(requestId);
 
+        // Create Notification
         const newParticipantEventNotification = new Notification({
           sender: userId,
           receiver: userRequestId,
@@ -443,6 +445,15 @@ export const eventRequestUserDecision = async (req, res) => {
           username,
           _id: userId,
         };
+
+        // Add member to event chat
+        const chat = await Chat.findOne({
+          type: "group",
+          eventId,
+        });
+        if (!chat) throw new Error("צאט לא נמצא");
+        chat.members.push(userRequest.username);
+        await chat.save();
 
         totalEventsRequests = await Request.find({
           receiver: userId,

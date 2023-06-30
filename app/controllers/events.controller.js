@@ -4,6 +4,7 @@ import {
   deleteImageFromS3,
   uploadImageToS3,
 } from "../middleware/uploadImageS3.js";
+import Chat from "../models/Chat/Chat.model.js";
 import Event from "../models/Event/Event.model.js";
 import Notification from "../models/Notification/notification.model.js";
 import Request from "../models/Request/request.model.js";
@@ -214,6 +215,7 @@ export const userJoinToEvent = async (req, res) => {
           username,
           _id: userId,
         };
+
         return res.send({
           status: "success",
           notification,
@@ -356,8 +358,28 @@ export const updateEventParticipants = async (req, res) => {
         })
       );
     };
+
+    const removeMembersFromGroupChat = async () => {
+      const chat = await Chat.findOne({
+        type: "group",
+        eventId,
+      });
+      if (!chat) throw new Error("צאט לא נמצא");
+
+      const membersUpdated = [...chat.members].filter((member) => {
+        return !participantsDeleted.some(
+          (memberDelete) => memberDelete.username === member
+        );
+      });
+
+      chat.members = membersUpdated;
+      const chatUpdated = await chat.save();
+      return chatUpdated;
+    };
+
     const notificationsToUsersRemoved =
       await NotificationsToRemovedParticipants();
+    const removedMembersFromChatEvent = await removeMembersFromGroupChat();
 
     res.send({
       status: "success",

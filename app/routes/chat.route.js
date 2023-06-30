@@ -3,7 +3,8 @@ import {
   addMemberToChat,
   createGroupChat,
   createPrivateChat,
-  findChat,
+  findGroupChat,
+  removeMemberFromChat,
   userChats,
 } from "../controllers/chat.controller.js";
 import {
@@ -21,8 +22,9 @@ export const chatRouter = express.Router();
 chatRouter.post("/private", auth, createPrivateChat);
 chatRouter.post("/group", auth, createGroupChat);
 chatRouter.patch("/group/add-member", auth, addMemberToChat);
+chatRouter.patch("/group/remove-member", auth, removeMemberFromChat);
 chatRouter.get("/", auth, userChats);
-chatRouter.get("/find/:firstId/:secondId", auth, findChat);
+chatRouter.get("/group/find", auth, findGroupChat);
 
 // messages
 chatRouter.post("/messages", auth, addMessage);

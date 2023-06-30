@@ -6,11 +6,12 @@ import { uniqueCount } from "./utils/message.util.js";
 export const addMessage = async (req, res) => {
   const { _id: userId } = req.user;
 
-  const { chatId, text } = req.body;
+  const { chatId, text, chatType } = req.body;
   const message = new Message({
     chatId,
     senderId: userId,
     text,
+    chatType,
   });
 
   try {

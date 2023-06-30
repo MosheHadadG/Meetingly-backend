@@ -16,6 +16,9 @@ export const MessageSchema = mongoose.Schema(
     isRead: {
       type: Array,
     },
+    chatType: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
