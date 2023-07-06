@@ -224,7 +224,7 @@ export const getUserNotifications = async (req, res) => {
   const userId = req.user._id;
   try {
     const { page } = req.query;
-    // if (!page) throw new Error("Need Page Number");
+    if (!page) throw new Error("Need Page Number");
 
     // pagination
     const LIMIT = 10;

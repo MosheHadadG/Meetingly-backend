@@ -1,4 +1,4 @@
-export const uniqueCount = (arr, keyName) => {
+export const uniqueCount = (arr) => {
   const uniqueCountObject = {};
 
   for (const element of arr) {

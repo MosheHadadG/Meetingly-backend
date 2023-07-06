@@ -29,7 +29,6 @@ eventsRouter.get("/specific-event", auth, getEventById);
 eventsRouter.get("/events-by-owner", auth, getEventsByOwnerId);
 eventsRouter.get("/events-user-participated", auth, getEventsUserParticipated);
 eventsRouter.get("/favorite", auth, getFavoriteEvents);
-// eventsRouter.get("/participants", auth, getParticipantsById);
 
 eventsRouter.patch("/join-event", auth, userJoinToEvent);
 eventsRouter.patch("/Cancel-participation", auth, userCancelParticipation);
