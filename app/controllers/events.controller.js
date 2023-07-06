@@ -142,6 +142,8 @@ export const getEventById = async (req, res) => {
     const eventOwnerDetails = {
       avatar: eventOwner.avatar,
       username: eventOwner.username,
+      firstName: eventOwner.firstName,
+      lastName: eventOwner.lastName,
     };
 
     res.send({ event, eventOwnerDetails });

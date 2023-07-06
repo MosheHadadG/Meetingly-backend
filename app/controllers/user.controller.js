@@ -66,7 +66,6 @@ export const createUser = async (req, res) => {
     if (mailAlreadyExist) throw new Error("מייל זה כבר קיים במערכת");
 
     const newUser = new User(userForm);
-    console.log(newUser);
     const user = await newUser.save();
     sendOtpVerificationEmail(user, res);
   } catch (err) {

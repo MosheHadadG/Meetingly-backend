@@ -1,6 +1,5 @@
 import aws from "aws-sdk";
 import multer from "multer";
-// import { S3Client } from "@aws-sdk/client-s3";
 
 import multerS3 from "multer-s3";
 import {
@@ -22,21 +21,7 @@ aws.config.update({
   region: S3_BUCKET_REGION,
 });
 
-// const s3 = new AWS.S3({
-//   accessKeyId: S3_ACCESS_KEY,
-//   secretAccessKey: S3_SECRET_ACCESS_KEY,
-//   Bucket: "meetingly",
-// });
-
 const s3 = new aws.S3();
-
-// let s3 = new S3Client({
-//   region: S3_BUCKET_REGION,
-//   credentials: {
-//     accessKeyId: S3_ACCESS_KEY,
-//     secretAccessKey: S3_SECRET_ACCESS_KEY,
-//   },
-// });
 
 export const uploadImageToS3 = (destinationPath) => {
   return multer({
@@ -54,7 +39,6 @@ export const uploadImageToS3 = (destinationPath) => {
 
     fileFilter(req, file, cb) {
       console.log(file);
-      // console.log(file);
       const isValid = !!MIME_TYPE_MAP[file.mimetype];
       let error = isValid ? null : new Error("Please upload an image");
       cb(error, isValid);
