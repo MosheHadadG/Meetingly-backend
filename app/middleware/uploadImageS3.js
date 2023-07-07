@@ -38,7 +38,6 @@ export const uploadImageToS3 = (destinationPath) => {
     }),
 
     fileFilter(req, file, cb) {
-      console.log(file);
       const isValid = !!MIME_TYPE_MAP[file.mimetype];
       let error = isValid ? null : new Error("Please upload an image");
       cb(error, isValid);
