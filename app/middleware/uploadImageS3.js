@@ -26,7 +26,7 @@ const s3 = new aws.S3();
 export const uploadImageToS3 = (destinationPath) => {
   return multer({
     limits: {
-      fileSize: 1000000,
+      fileSize: 5000000,
     },
     storage: multerS3({
       s3,
